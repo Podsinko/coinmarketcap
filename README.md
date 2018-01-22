@@ -1,1 +1,1 @@
-# coinmarketcap
+# Coinmarketcap Django project
