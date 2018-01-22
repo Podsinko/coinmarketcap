@@ -1,3 +1,5 @@
+from parser import coinmarket
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -5,6 +7,11 @@ from django.shortcuts import render
 
 def index(request):
     if 'coin' in request.POST:
-        return render(request, 'page1/index.html',
-                      {'coin': request.POST['coin']})
+        data = coinmarket(request.POST['coin'])
+        if data:
+            return render(request, 'page1/index.html',
+                          {'coin': data})
+        else:
+            return render(request, 'page1/index.html',
+                          {'coin': "NO COIN FOUND!"})
     return render(request, 'page1/index.html')
