@@ -9,11 +9,11 @@
  <form name="coinmarketcap" method="post" action="">
   {% csrf_token %}
   <p><b>Enter coin name:</b><br>
-   <input type="text" size="40">
+   <input type="text" size="40" name="coin">
   </p>
   <p><input type="submit" value="Send">
    <input type="reset" value="Reset"></p>
  </form>
-
+{{ coin }}
  </body>
 </html>
