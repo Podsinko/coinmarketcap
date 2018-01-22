@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, 'page1/index.html')
     if 'coin' in request.POST:
-        coin = request.POST['coin']
-        return render(request, 'page1/index.html', {'coin': coin})
+        return render(request, 'page1/index.html',
+                      {'coin': request.POST['coin']})
+    return render(request, 'page1/index.html')
