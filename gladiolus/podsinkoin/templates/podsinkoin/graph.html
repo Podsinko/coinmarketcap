@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Coinmarketcap Wrapper by Podsinko</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
+ </head>
+ <body>
+     <div class="container-fluid">
+         <div class="row">
+		<div class="col-md-12">
+			<nav class="navbar navbar-default navbar-inverse" role="navigation">
+				<div class="navbar-header">
+
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+					</button> <a class="navbar-brand" href="#">PodsinKoin</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="#">Coins Info</a>
+						</li>
+						<li>
+							<a href="#">Link</a>
+						</li>
+					</ul>
+					<form class="navbar-form navbar-left" role="search" method="post">
+                        {% csrf_token %}
+						<div class="form-group">
+							<input type="text" class="form-control" id="coin" name="coin" placeholder="Enter coin name..."/>
+						</div>
+						<button type="submit" class="btn btn-default">
+							Submit
+						</button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#">Link</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+    {% if coin %}
+	<div class="row">
+        <div class="col-md-6">
+            <canvas id="myChart1"></canvas>
+            <script>
+            var ctx = document.getElementById("myChart1").getContext('2d');
+            var changes = {{ changes }};
+            var names = "{{ names }}".split("/");
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: names,
+                    datasets: [{
+                        label: '24 Hour Change',
+                        data: changes,
+                        backgroundColor: [
+                            'rgba(65, 99, 132, 0.2)',
+                            'rgba(123, 162, 235, 0.2)',
+                            'rgba(78, 206, 86, 0.2)',
+                            'rgba(88, 192, 192, 0.2)',
+                            'rgba(24, 102, 255, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(65, 99, 132, 1)',
+                            'rgba(123, 162, 235, 1)',
+                            'rgba(78, 206, 86, 1)',
+                            'rgba(88, 192, 192, 1)',
+                            'rgba(24, 102, 255, 1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+            </script>
+		</div>
+		<div class="col-md-6">
+            <canvas id="myChart2"></canvas>
+            <script>
+            var ctx = document.getElementById("myChart2").getContext('2d');
+            var datalinks = {{ datalinks }};
+            var names = "{{ names }}".split("/");
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: names,
+                    datasets: [{
+                        label: 'USD Price',
+                        data: datalinks,
+                        backgroundColor: [
+                            'rgba(65, 99, 132, 0.2)',
+                            'rgba(123, 162, 235, 0.2)',
+                            'rgba(78, 206, 86, 0.2)',
+                            'rgba(88, 192, 192, 0.2)',
+                            'rgba(24, 102, 255, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(65, 99, 132, 1)',
+                            'rgba(123, 162, 235, 1)',
+                            'rgba(78, 206, 86, 1)',
+                            'rgba(88, 192, 192, 1)',
+                            'rgba(24, 102, 255, 1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+            </script>
+		</div>
+        <div class="col-md-12">
+            <hr />
+        </div>
+		<div class="col-md-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Rank
+                        </th>
+                        <th>
+                            Symbol
+                        </th>
+                        <th>
+                            Coin
+                        </th>
+                        <th>
+                            USD Price
+                        </th>
+                        <th>
+                            Total Supply
+                        </th>
+                        <th>
+                            Percent Change - 1 Hour/24 Hours/7 Days
+                        </th>
+                        <th>
+                            Last Updated
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in coin %}
+                        {% if c.percent_change_24h > 10 %}
+                        <tr class="success">
+                        {% elif c.percent_change_24h < 0 %}
+                        <tr class="danger">
+                        {% else %}
+                        <tr class="warning">
+                        {% endif %}
+
+                            <td>
+                                {{ c.rank }}
+                            </td>
+                            <td>
+                                {{ c.symbol }}
+                            </td>
+                            <td>
+                                {{ c.name }}
+                            </td>
+                            <td>
+                                {{ c.price_usd }}
+                            </td>
+                            <td>
+                                {{ c.total_supply }}
+                            </td>
+                            <td>
+                                {{ c.percent_change_1h }}...{{ c.percent_change_24h }}...{{ c.percent_change_7d }}
+                            </td>
+                            <td>
+                                {{ c.last_updated }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+		</div>
+	</div>
+    {% endif %}
+</div>
+ </body>
+ </html>
