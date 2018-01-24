@@ -22,4 +22,4 @@ def index(request):
                                              ) for d in data],
                            'supplies': [float(d['total_supply']
                                               ) for d in data]})
-    return render(request, 'podsinkoin1/index.html')
+    return render(request, 'podsinkoin/index.html')
