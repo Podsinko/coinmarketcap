@@ -3,39 +3,90 @@
  <head>
   <meta charset="utf-8">
   <title>Coinmarketcap Wrapper by Podsinko</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
  </head>
  <body>
+     <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-4">
+			<form role="form" method="post">
+                {% csrf_token %}
+				<div class="form-group">
 
- <form name="coinmarketcap" method="post" action="">
-  {% csrf_token %}
-  <p><b>Enter coin name:</b><br>
-   <input type="text" size="40" name="coin">
-  </p>
-  <p><input type="submit" value="Send">
-   <input type="reset" value="Reset"></p>
- </form>
- {% if coin %}
- <style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{font-family:Ubuntu, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
-.tg th{font-family:Ubuntu, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
-.tg .tg-yw4l{vertical-align:top}
-.tg .tg-9hbo{font-weight:bold;vertical-align:top}
-</style>
-<table class="tg" style="undefined;table-layout: fixed; width: 89px">
-<colgroup>
-<col style="width: 100px">
-<col style="width: 100px">
-</colgroup>
-<tr>
-  <th class="tg-9hbo">Coin</th>
-  <th class="tg-9hbo">USD Price</th>
-</tr>
-<tr>
-  <th class="tg-yw4l">{{ coin.name }}</th>
-  <th class="tg-yw4l">{{ coin.price_usd }}</th>
-</tr>
-</table>
- {% endif %}
+					<label for="exampleInputEmail1">
+						Enter coin name or leave empty for full list:
+					</label>
+					<input type="text" class="form-control" id="coin" name="coin"/>
+				</div>
+				<button type="submit" class="btn btn-default">
+					Submit!
+				</button>
+			</form>
+		</div>
+		<div class="col-md-4">
+		</div>
+		<div class="col-md-4">
+		</div>
+	</div>
+    {% if coin %}
+	<div class="row">
+		<div class="col-md-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Coin
+                        </th>
+                        <th>
+                            USD Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in coin %}
+                    {% if c.price_usd > 2000 %}
+                    <tr class="success">
+                        <td>
+                            {{ c.name }}
+                        </td>
+                        <td>
+                            {{ c.price_usd }}
+                        </td>
+                    </tr>
+                    {% elif c.price_usd < 1 %}
+                    <tr class="danger">
+                        <td>
+                            {{ c.name }}
+                        </td>
+                        <td>
+                            {{ c.price_usd }}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr class="warning">
+                        <td>
+                            {{ c.name }}
+                        </td>
+                        <td>
+                            {{ c.price_usd }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+		</div>
+		<div class="col-md-6">
+		</div>
+	</div>
+    {% endif %}
+</div>
  </body>
-</html>
+ </html>
