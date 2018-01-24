@@ -37,8 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'page1',
-    'page2',
+    'podsinkoin'
 )
 
 MIDDLEWARE_CLASSES = (
