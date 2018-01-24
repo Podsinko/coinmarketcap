@@ -1,6 +1,13 @@
 #!/usr/bin/python3
 """Coinmarketcap currencies info scraper."""
+import time
+
 import requests
+
+
+def localtime(epoch):
+    """Convert epoch time to local time."""
+    return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(int(epoch)))
 
 
 def coinmarket(coin):
@@ -11,13 +18,14 @@ def coinmarket(coin):
                     requests.get(
                         'https://api.coinmarketcap.com/v1/ticker/?limit=0'
                     ).json()
-                    if i['symbol'] == coin and i['price_usd'] is not None]
+                    if i['symbol'] == coin and i['percent_change_24h'
+                                                 ] is not None]
         else:
             return [i for i in
                     requests.get(
                         'https://api.coinmarketcap.com/v1/ticker/?limit=0'
-                    ).json() if i['price_usd'] is not None
-                    ]
+                    ).json() if i['percent_change_24h'] is not None
+                    ][:10]
     except:
         return False
 
